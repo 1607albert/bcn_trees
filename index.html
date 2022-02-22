@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Arbres Urbans de Barcelona</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.21/esri/themes/light/main.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <script src="https://js.arcgis.com/4.21/"></script>
+    <link rel="stylesheet" href="./style.css" />
+
+    
+
+  </head>
+  <nav>
+    
+      
+    
+        <a class="lang" id="esp">Català</a>
+        <a class="lang" id="eng">English</a>
+   
+    
+  </nav>
+  <header id="indexlist">
+    <h1>Diversitat a l'arbrat a la Ciutat de Barcelona</h1>
+    <h3>basat en l'arbrat urbá</h3>
+    <h4>autor: Albert Villalobos Gasca</h4>
+    
+    <ul >
+      <li ><a href="#section1">Presentació</a> </li>
+      <li ><a href="#mainSection"> Mapa interactiu de diversitat de l'arbrat urbà.</a> </li>
+      <li ><a href="#section3">Anàlisi dels resultats obtinguts</a> </li>
+      <li ><a href="#section4">Metodología i aspectes tècnics de l'eina</a> </li>
+      <li ><a href="#section5">Bibliografía</a> </li>
+    </ul>
+  </header>
+
+
+  <body>
+    
+        <div id="status"><img src="./treeCharge.PNG" alt=""><p>Carregant consulta</p> </div>
+           <div id="title-article">
+      <h1>L'arbrat urbà i la seva importància en la planificació del verd urbà</h1>
+     
+    </div>
+    <section id="section1">
+      <article id="deplsection1"  ><h3>Presentació de l'eina. <div id="triangle1"  class="triangle" onclick="deployArticles(this.id)"> &#9660 </div></h3><p>
+        Donada la situació d’emergència climàtica a nivell global , es fa necessària una conscienciació general per part de la ciutadania sobre la importància del manteniment i protecció de les superfícies vegetals (en totes les seves diverses extensions), que actuen com a pulmons, reguladors climàtics, enriquidors, fixadors del sòl i un llarg etcètera. <br><br><b>
+        En aquest cas aquesta es una eina de divulgació per a conèixer una mica més l’arbrat urbà  i la seva distribució a la ciutat de Barcelona.</b><br><br>
+        Cal remarcar que totes les dades representades en aquesta eina provenen del processament de les mateixes obtingudes del <a href="https://opendata-ajuntament.barcelona.cat/ca/">portal de dades obertes de la ciutat de Barcelona</a> (Open Data BCN). A la secció de bibliografia trobareu l'accés a les fonts.
+        <br><br>
+        Abans de res hem de remarcar que el denominat verd urbà dintre del marc de les ciutats es considera un tipus d’infraestructura i per tant, si més no en el cas de la ciutat de Barcelona, es considera com a una variable més a tenir en compte en el moment de dissenyar la trama urbana. Aquesta, es denomina infraestructura ecològica i s’entén com l’entramat d’espais urbans els quals presenten dintre de les seves funcionalitats la de acollir en major o menor manera algun tipus de vegetació <i>(Ajuntament de Barcelona & Hàbitat Urbà, 2020)</i>. Cal remarcar que en el marc d’infraestructura es comprèn tant els espais públics o privats. Dintre de la infraestructura ecològica ens podem focalitzar donat el marc d’aquest article en el verd urbà públic, implementat durant les diverses planificacions urbanes i que es consideren en el marc d’espai públic, així mateix deixàrem de costat aquell verd urbà considerat natural i que per tant no ha estat projectada explícitament en la trama urbana com es el cas del Parc natural de Collserola y les zones verdes naturals dintre de l’espai de la muntanya de Montjuic.
+        <br><br>
+        D’altra banda tot i que la biodiversitat engloba tots els éssers vius ja sigui vegetals o animals, una clau important de la planificació del verd urbà també contempla la diversitat ja que aquesta juga un paper molt important per a la lluita contra possibles plagues, resiliència en front del canvi climàtic i diferents utilitats basades en les particularitats específiques de cada tipus d’arbre (tipus d’ombra que ofereixen, trama reticular, tipus de creixements, floració..)  <i>(Morgenroth et al., 2016)</i>
+        <br><br>
+        <a class="inici" href="#indexlist">>Tornar a l'inici<</a></p>
+        
+        </article>
+        
+    </section>
+    <h3>Mapa interactiu de diversitat de l'arbrat urbà. </h3>
+    <section id="mainSection">
+      
+     
+      
+      <div id="graphResult" class="hide"></div>
+   
+    <div id="sidebar"class="hide">
+      <i id="close"class="fas fa-angle-double-left hide" onclick="sideDeploy(this.id)"></i>
+    </div>
+    
+    <div id="selectableItems">
+      
+      <div id="itemSelector" class="micro scrollOff">
+        <i
+          id="itemSelectorMin"
+          class="fas fa-minus"
+          onclick="minifyWindow(this.id)"
+        > Selector de Barris i Districtes</i>
+        
+          
+            <div id="distritoList">
+              <div id="contdistr" class="hide"></div>
+              <div id="contbarr" class="hide"></div>
+              <!-- <h3 id="title-distritos" onclick="deploy(this.id)">
+                Mostrar llistat
+              </h3> -->
+  
+              <ul id="container-distritos" >
+                <li
+                  id="distr0"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"
+                  class="district"
+                >
+                  Ciutat Completa
+                </li>
+  
+                <li
+                  id="distr1"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"
+                  class="district"
+                >
+                  Ciutat Vella
+                  <ul id="distrCiutatVella" class="hide">
+                    <li id="1" onclick="deployBarrios(this.id)" class="barri">El Raval</li>
+                    <li id="2" onclick="deployBarrios(this.id)" class="barri">El Gòtic</li>
+                    <li id="3" onclick="deployBarrios(this.id)" class="barri">La Barceloneta</li>
+                    <li id="4" onclick="deployBarrios(this.id)" class="barri">Sant Pere, Santa Caterina i la Ribera</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr2"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"     class="district"  >
+                  Eixample
+                  <ul id="Eixample" class="hide"><li id="6" onclick="deployBarrios(this.id)" class="barri">La Sagrada Família</li>
+                    <li id="7" onclick="deployBarrios(this.id)" class="barri">La Dreta de l'Eixample</li>
+                    <li id="8" onclick="deployBarrios(this.id)" class="barri">L'Antiga Esquerra de l'Eixample</li>
+                    <li id="9" onclick="deployBarrios(this.id)" class="barri">La Nova Esquerra de l'eixample</li>
+                    <li id="10" onclick="deployBarrios(this.id)" class="barri">Sant Antoni</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr3"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)" class="district"
+                >
+                  Sants-Montjuic
+                  <ul id="santsMonjuic" class="hide"><li id="11" onclick="deployBarrios(this.id)" class="barri">El Poble Sec</li>
+                    <li id="12" onclick="deployBarrios(this.id)" class="barri">La Marina del Prat Vermell</li>
+                    <li id="13" onclick="deployBarrios(this.id)" class="barri">La Marina del Port</li>
+                    <li id="14" onclick="deployBarrios(this.id)" class="barri">La Font de la Guatlla</li>
+                    <li id="15" onclick="deployBarrios(this.id)" class="barri">Hostafrancs</li>
+                    <li id="16" onclick="deployBarrios(this.id)" class="barri">La Bordeta</li>
+                    <li id="17" onclick="deployBarrios(this.id)" class="barri">Sants-Badal</li>
+                    <li id="18" onclick="deployBarrios(this.id)" class="barri">Sants</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr4"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Les Corts
+                  <ul id="corts" class="hide"><li id="19" onclick="deployBarrios(this.id)" class="barri">Les Corts</li>
+                    <li id="20" onclick="deployBarrios(this.id)" class="barri">La Maternitat i les Planes</li>
+                    <li id="21" onclick="deployBarrios(this.id)" class="barri">Pedralbes</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr5"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Sarrià-Sant Gervasi
+                  <ul id="sarria" class="hide"><li id="22" onclick="deployBarrios(this.id)" class="barri">Vallvidrera, el Tibidabo i les Planes</li>
+                    <li id="23" onclick="deployBarrios(this.id)" class="barri">Sarrià</li>
+                    <li id="24" onclick="deployBarrios(this.id)" class="barri">Les Tres Torres</li>
+                    <li id="25" onclick="deployBarrios(this.id)" class="barri">Sant Gervasi-Bonanova</li>
+                    <li id="26" onclick="deployBarrios(this.id)" class="barri">Sant Gervasi-Galvany</li>
+                    <li id="27" onclick="deployBarrios(this.id)" class="barri">El Putget i Farró</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr6"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Gràcia
+                  <ul id="gracia" class="hide"><li id="28" onclick="deployBarrios(this.id)" class="barri">Vallcarca i els Penitents</li>
+                    <li id="29" onclick="deployBarrios(this.id)" class="barri">El Coll</li>
+                    <li id="30" onclick="deployBarrios(this.id)" class="barri">La Salut</li>
+                    <li id="31" onclick="deployBarrios(this.id)" class="barri">Vila de Gràcia</li>
+                    <li id="32" onclick="deployBarrios(this.id)" class="barri">El Camp d'en Grassot i Gràcia Nova</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr7"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Horta-Guinardó
+                  <ul id="horta" class="hide"><li id="33" onclick="deployBarrios(this.id)" class="barri">El Baix Guinardó</li>
+                    <li id="34" onclick="deployBarrios(this.id)" class="barri">Can Baró</li>
+                    <li id="35" onclick="deployBarrios(this.id)" class="barri">El Guinardó</li>
+                    <li id="36" onclick="deployBarrios(this.id)" class="barri">La Font d'en Fargues</li>
+                    <li id="37" onclick="deployBarrios(this.id)" class="barri">El Carmel</li>
+                    <li id="38" onclick="deployBarrios(this.id)" class="barri">La Teixonera</li>
+                    <li id="39" onclick="deployBarrios(this.id)" class="barri">Sant Genís dels Agudells</li>
+                    <li id="40" onclick="deployBarrios(this.id)" class="barri">Montbau</li>
+                    <li id="41" onclick="deployBarrios(this.id)" class="barri">La Vall d'Hebron</li>
+                    <li id="42" onclick="deployBarrios(this.id)" class="barri">La Clota</li>
+                    <li id="43" onclick="deployBarrios(this.id)" class="barri">Horta</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr8"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Nou Barris
+                  <ul id="nouBarris" class="hide"><li id="44" onclick="deployBarrios(this.id)" class="barri">Vilapicina i la Torre Llobeta</li>
+                    <li id="45" onclick="deployBarrios(this.id)" class="barri">Porta</li>
+                    <li id="46" onclick="deployBarrios(this.id)" class="barri">El Turó de la Peira</li>
+                    <li id="47" onclick="deployBarrios(this.id)" class="barri">Can Peguera</li>
+                    <li id="48" onclick="deployBarrios(this.id)" class="barri">La Guineueta</li>
+                    <li id="49" onclick="deployBarrios(this.id)" class="barri">Canyelles</li>
+                    <li id="50" onclick="deployBarrios(this.id)" class="barri">Les Roquetes</li>
+                    <li id="51" onclick="deployBarrios(this.id)" class="barri">Verdun</li>
+                    <li id="52" onclick="deployBarrios(this.id)" class="barri">La Prosperitat</li>
+                    <li id="53" onclick="deployBarrios(this.id)" class="barri">La Trinitat Nova</li>
+                    <li id="54" onclick="deployBarrios(this.id)" class="barri">Torre Baró</li>
+                    <li id="55" onclick="deployBarrios(this.id)" class="barri">Ciutat Meridiana</li>
+                    <li id="56" onclick="deployBarrios(this.id)" class="barri">Vallbona</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr9"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Sant Andreu
+                  <ul id="stAndreu" class="hide"><li id="57" onclick="deployBarrios(this.id)" class="barri">La Trinitat Vella</li>
+                    <li id="58" onclick="deployBarrios(this.id)" class="barri">Baró de Viver</li>
+                    <li id="59" onclick="deployBarrios(this.id)" class="barri">El Bon Pastor</li>
+                    <li id="60" onclick="deployBarrios(this.id)" class="barri">Sant Andreu</li>
+                    <li id="61" onclick="deployBarrios(this.id)" class="barri">La Sagrera</li>
+                    <li id="62" onclick="deployBarrios(this.id)" class="barri">El Congrés i els Indians</li>
+                    <li id="63" onclick="deployBarrios(this.id)" class="barri">Navas</li>
+                  </ul>
+                </li>
+                <li
+                  id="distr10"
+                  onclick="deployDistritos(this.id),deployBarr(this.id)"class="district"
+                >
+                  Sant Martí
+                  <ul id="stMarti" class="hide"><li id="64" onclick="deployBarrios(this.id)" class="barri">El Camp de l'Arpa del Clot</li>
+                    <li id="65" onclick="deployBarrios(this.id)" class="barri">El Clot</li>
+                    <li id="66" onclick="deployBarrios(this.id)" class="barri">El Parc i la LLacuna del Poblenou</li>
+                    <li id="67" onclick="deployBarrios(this.id)" class="barri">La Vila Olímpica del Poblenou</li>
+                    <li id="68" onclick="deployBarrios(this.id)" class="barri">El Poblenou</li>
+                    <li id="69" onclick="deployBarrios(this.id)" class="barri">Diagional Mar i el Front Marítim del Poblenou</li>
+                    <li id="70" onclick="deployBarrios(this.id)" class="barri">El Besós i el Maresme</li>
+                    <li id="71" onclick="deployBarrios(this.id)" class="barri">Provençals del Poblenou</li>
+                    <li id="72" onclick="deployBarrios(this.id)" class="barri">Sant Martí de Provençals</li>
+                    <li id="73" onclick="deployBarrios(this.id)" class="barri">La Verneda i la Pau</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          
+        
+      </div>
+      
+      <div id="results" class="hide"></div>
+  
+      
+
+    </div>
+  </div>
+  <div id="resizer" ></div>
+    <div id="viewDiv"></div>
+  
+  </section>
+  <a class="inici"href="#indexlist">>Tornar a l'inici<</a>
+  <section id="section3">
+    <article id="main-article">
+      <h3 id="triangle2">Anàlisis dels resultats obtinguts.<div id="triangles"  class="triangle" onclick="deployArticles(this.id)"> &#9660 </div></h3><div>
+      <p>
+        La presència d’arbrat urbà a les ciutats es un fet indiscutible, la gran majoria de poblacions mundials, ja sigui en menor o major quantitat, presenten una planificació o creixement urbà en el qual es fomenta en certa manera la implementació de zones verdes que inclouen aquest tipus de vegetació.<br>
+        Tot i que la presència de verd urbà a les ciutats no es refereix només al arbrat, ja que tan sols conforma una categoria dintre d’una gran diversitat de vegetació, en aquest visor ho prendrem com a factor rellevant i primari amb la finalitat de facilitar la anàlisis.<br> 
+        Per tant, focalitzant-nos en la presencia d’arbres, plantegem les primeres qüestions relacionades amb la necessitat o no, de mantenir el màxim volum possible d’arbrat urbà en les nostres ciutats, sempre mantenint la seva distribució al llarg i ample de l’extensió urbana.<br><br>
+        Efectes directes sobre les persones:<br><br>
+        
+        En molts casos el contacte amb el verd urbà per a un gran numero de persones és l’únic contacte amb la natura al llarg del dia i està demostrat i és mesurable com aquesta interacció té un efecte positiu en certs aspectes psicològics, així com també influeix de manera positiva la seva diversitat. (Fuller et al., 2007).<br>
+        Cal remarcar que, la implementació de manera intensiva del verd urbà en barris o altre tipus zones urbanes pot conduir clarament a la denominada gentrificació verda (Wolch et al., 2014) , en la que degut a un desequilibri en la distribució del verd urbà certes zones adquireixen el “privilegi” del verd urbà i això es tradueix en un encariment del preu del sòl i s’inicien processos de desplaçament de veïnes i veïns cap a altres barris més accessibles. Tot i així si es mantenen polítiques de distribució equitativa del verd urbà aquest procés de gentrificació es pot arribar a contrarestar, ja que tot el municipi o ciutat generarà espais verd d’igual manera absorbint així la possible bretxa verda generada. 
+        <br><br>També s’ha de tenir en compte que la implementació de nous espais verds no ha d’anar lligada a la desaparició o substitució d’espais d’habitatge ja existent.
+      </p>
+      <div id="treeNumber">
+          <form id="districtForm" action="">
+            <label for="districtsSelection">Seleccioneu Districte:</label>
+            <select name="districtsSelection" id="distrSelector" onchange="graphSelector(this.id)" >
+              <option id="sel0" value="Tots els Barris" >Tots els Barris</option>
+              <option id="sel1" value="Ciutat Vella">Ciutat Vella</option>
+              <option id="sel2"value="Eixample">Eixample</option>
+              <option id="sel3"value="Sants Monjuic">Sants Monjuic</option>
+              <option id="sel4"value="Les Corts">Les Corts</option>
+              <option id="sel5"value="Sarrià-Sant Gervasi">Sarrià-Sant Gervasi</option>
+              <option id="sel6"value="Gràcia">Gràcia</option>
+              <option id="sel7"value="Horta-Guinardo">Horta-Guinardo</option>
+              <option id="sel8"value="Nou Barris">Nou Barris</option>
+              <option id="sel9"value="Sant Andreu">Sant Andreu</option>
+              <option id="sel10"value="Sant Martí">Sant Martí</option>
+            </select>
+           
+           </form>
+            <div id="graphNumberOfTrees"></div>
+                
+       </div><div id="secondPart">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, consequatur! Nemo blanditiis soluta temporibus incidunt sapiente enim ea distinctio architecto accusamus fuga, iure quam ipsum quo iusto similique velit nam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, fugit laudantium? Odio in repellendus, distinctio cupiditate id possimus labore et nesciunt at. Ab ullam voluptate culpa sequi corporis, aut itaque.lorem Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni libero eius voluptatum, eaque inventore praesentium? Fugit, ut sit ipsum voluptas consectetur facilis quia quisquam exercitationem rem quod, nostrum, repellat praesentium.
+         <div id="generalGraph" class="zoomedOut" onclick="amplifyGraph(this.id)"> <img  id="imagegraph"src="Figure_1.png" alt="" /></div></div></div>  
+        
+       <a class="inici" href="#indexlist">>Tornar a l'inici<</a></article> 
+  </section> 
+  <section id="section4">
+    <article><h3>Metodología i aspectes tècnics de l'eina.<div id="triangle3" class="triangle" onclick="deployArticles(this.id)"> &#9660 </div></h3><p>
+      Per a l'elaboració d'aquesta eina s'han consultat les fonts de dades provinents de l'Ajuntament de Barcelona i aquestes han estat tractades filtrades i analitzades en un entorn de Python des de el que s'han convertit totes les dades en fitxers JSON per a facilitar la explotació i representació dels mateixos mitjançant un entorn de Javascript y la API 4.2.2 d'ARCGIS, tot el codi es accessible de l'eina per a qualsevol usuari, el codi de l'eina es troba a Guithub y els arxius JSON els podeu descarregar aqui..
+      Així mateix per la representació d'alguns dels gràfics s'ha utilitzat la llibreria <a href="https://plotly.com/javascript/">Plotly</a> per a Javascript.
+      Respecte a la diversitat s'ha realitzat un càlcul de l'entropia dels Barris de la ciutat basant-se en el número d'arbres i la diversitat d'especies dels mateixos així mateix s'ha realitzat una comparació entre barris i finalment s'han normalitzat els resultats entre 0 i 1 per a facilitar la interpretació dels valors obtinguts.
+      </p></article>
+      <a class="inici"href="#indexlist">>Tornar a l'inici<</a>
+  </section> 
+  <section id="section5">
+    <article><h3>Bibliografia.<div id="triangle3" class="triangle" onclick="deployArticles(this.id)"> &#9660 </div></h3><p>Ajuntament de Barcelona, & Hàbitat Urbà. (2020). BCN: Pla del verd i de la biodiversitat de Barcelona 2020.
+      <br><br>
+      Fuller, R. A., Irvine, K. N., Devine-Wright, P., Warren, P. H., & Gaston, K. J. (2007). Psychological benefits of greenspace increase with biodiversity. Biology Letters, 3(4), 390–394. https://doi.org/10.1098/rsbl.2007.0149 <br><br>
+      Morgenroth, J., Östberg, J., Konijnendijk van den Bosch, C., Nielsen, A. B., Hauer, R., Sjöman, H., Chen, W., & Jansson, M. (2016). Urban tree diversity-Taking stock and looking ahead. Urban Forestry and Urban Greening, 15, 1–5. https://doi.org/10.1016/j.ufug.2015.11.003<br><br>
+      Wolch, J. R., Byrne, J., & Newell, J. P. (2014). Urban green space, public health, and environmental justice: The challenge of making cities “just green enough.” Landscape and Urban Planning, 125, 234–244. https://doi.org/10.1016/j.landurbplan.2014.01.017
+      
+      </p></article>
+      <a class="inici"href="#indexlist">>Tornar a l'inici<</a>
+  </section> 
+   
+    
+
+  </body>
+  <script src="./main.js" async defer></script>
+</html>
